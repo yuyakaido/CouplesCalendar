@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <color name="cc_while">#FFFFFF</color>
+    <color name="cc_black">#000000</color>
+
+    <color name="cc_border">#d6d6d6</color>
+    
+    <color name="cc_ordinary_day">#323232</color>
+    <color name="cc_saturday">#04a9ee</color>
+    <color name="cc_sunday">#e71f11</color>
+
+    <color name="cc_selected_cell_red_theme">#e11d1d</color>
+    <color name="cc_today_cell_red_theme">#fce8e8</color>
+    <color name="cc_selected_cell_orange_theme">#ff6339</color>
+    <color name="cc_today_cell_orange_theme">#ffefeb</color>
+    <color name="cc_selected_cell_yellow_theme">#fab600</color>
+    <color name="cc_today_cell_yellow_theme">#fef8e5</color>
+    <color name="cc_selected_cell_green_theme">#41c337</color>
+    <color name="cc_today_cell_green_theme">#ecf9eb</color>
+    <color name="cc_selected_cell_tiffany_blue_theme">#25c49d</color>
+    <color name="cc_today_cell_tiffany_blue_theme">#e9f9f5</color>
+    <color name="cc_selected_cell_light_blue_theme">#31bbf2</color>
+    <color name="cc_today_cell_light_blue_theme">#eaf8fe</color>
+    <color name="cc_selected_cell_blue_theme">#2e5fc2</color>
+    <color name="cc_today_cell_blue_theme">#eaeff9</color>
+    <color name="cc_selected_cell_purple_theme">#7f70ca</color>
+    <color name="cc_today_cell_purple_theme">#f2f0fa</color>
+    <color name="cc_selected_cell_pink_theme">#f69db6</color>
+    <color name="cc_today_cell_pink_theme">#fef5f8</color>
+    <color name="cc_selected_cell_navy_blue_theme">#292f3c</color>
+    <color name="cc_today_cell_navy_blue_theme">#e9eaeb</color>
+
+    <color name="cc_event_red_theme">#ff4b38</color>
+    <color name="cc_event_orange_theme">#f9aa4b</color>
+    <color name="cc_event_yellow_theme">#ffeba3</color>
+    <color name="cc_event_green_theme">#caf078</color>
+    <color name="cc_event_tiffany_blue_theme">#61d8ce</color>
+    <color name="cc_event_light_blue_theme">#31bbf2</color>
+    <color name="cc_event_blue_theme">#1854fa</color>
+    <color name="cc_event_purple_theme">#a494ff</color>
+    <color name="cc_event_pink_theme">#f69db6</color>
+    <color name="cc_event_navy_blue_theme">#292f8d</color>
+
+</resources>

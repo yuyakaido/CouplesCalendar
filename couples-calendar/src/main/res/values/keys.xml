@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <item name="date_grid_view_tag_key_date_time" type="id"/>
+    <item name="date_grid_view_tag_key_view_holder" type="id"/>
+
+</resources>

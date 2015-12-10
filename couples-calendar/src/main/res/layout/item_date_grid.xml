@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.yuyakaido.android.couplescalendar.view.SquareCheckedLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/item_date_grid_border"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/cc_border"/>
+
+    <com.yuyakaido.android.couplescalendar.view.CheckedView
+        android:id="@+id/item_date_grid_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"/>
+
+    <CheckedTextView
+        android:id="@+id/item_date_grid_date"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="4dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/selector_ordinary_day_text_color"/>
+
+    <View
+        android:id="@+id/item_date_grid_center_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
+
+    <com.yuyakaido.android.couplescalendar.view.CheckedView
+        android:id="@+id/item_date_grid_first_event"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_toLeftOf="@+id/item_date_grid_center_view"
+        android:layout_below="@+id/item_date_grid_center_view"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="9dp"
+        android:visibility="invisible"/>
+
+    <com.yuyakaido.android.couplescalendar.view.CheckedView
+        android:id="@+id/item_date_grid_second_event"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_toRightOf="@+id/item_date_grid_center_view"
+        android:layout_below="@+id/item_date_grid_center_view"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="9dp"
+        android:visibility="invisible"/>
+
+    <com.yuyakaido.android.couplescalendar.view.EventLine
+        android:id="@+id/item_date_grid_upper_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_above="@+id/item_date_grid_lower_line"
+        android:visibility="invisible"/>
+
+    <com.yuyakaido.android.couplescalendar.view.EventLine
+        android:id="@+id/item_date_grid_lower_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/item_date_grid_third_event_base"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/icon_calendar_more_base"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+    <ImageView
+        android:id="@+id/item_date_grid_third_event_plus"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/icon_calendar_more_plus"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
+</com.yuyakaido.android.couplescalendar.view.SquareCheckedLayout>
