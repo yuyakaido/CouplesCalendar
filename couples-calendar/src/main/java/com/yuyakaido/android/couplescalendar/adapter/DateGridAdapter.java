@@ -14,10 +14,10 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 
 import com.yuyakaido.android.couplescalendar.R;
-import com.yuyakaido.android.couplescalendar.model.CouplesCalendarEvent;
 import com.yuyakaido.android.couplescalendar.model.Date;
 import com.yuyakaido.android.couplescalendar.model.DayOfWeek;
 import com.yuyakaido.android.couplescalendar.model.InternalEvent;
+import com.yuyakaido.android.couplescalendar.model.LinePosition;
 import com.yuyakaido.android.couplescalendar.model.Theme;
 import com.yuyakaido.android.couplescalendar.util.CalendarUtils;
 import com.yuyakaido.android.couplescalendar.util.EventCache;
@@ -104,11 +104,9 @@ public class DateGridAdapter extends ArrayAdapter<Date> {
         if (multipleDaysEvents != null) {
             for (InternalEvent event : multipleDaysEvents) {
                 // 下にイベントがある場合
-                drawEventLine(date, multipleDaysEvents, event,
-                        CouplesCalendarEvent.LinePosition.LOWER, holder.lowerEventLine);
+                drawEventLine(date, multipleDaysEvents, event, LinePosition.LOWER, holder.lowerEventLine);
                 // 上にイベントがある場合
-                drawEventLine(date, multipleDaysEvents, event,
-                        CouplesCalendarEvent.LinePosition.UPPER, holder.upperEventLine);
+                drawEventLine(date, multipleDaysEvents, event, LinePosition.UPPER, holder.upperEventLine);
             }
         }
     }
@@ -125,7 +123,7 @@ public class DateGridAdapter extends ArrayAdapter<Date> {
             Date date,
             List<InternalEvent> multipleDaysEvents,
             InternalEvent event,
-            CouplesCalendarEvent.LinePosition linePosition,
+            LinePosition linePosition,
             EventLine eventLine) {
         if (event.getLinePosition() == linePosition) {
             eventLine.setVisibility(View.VISIBLE);
@@ -166,7 +164,7 @@ public class DateGridAdapter extends ArrayAdapter<Date> {
     private InternalEvent getOtherEventIn(
             List<InternalEvent> events,
             InternalEvent event,
-            CouplesCalendarEvent.LinePosition linePosition) {
+            LinePosition linePosition) {
         for (InternalEvent other : events) {
             if (!other.equals(event)
                     && other.getLinePosition() == linePosition) {

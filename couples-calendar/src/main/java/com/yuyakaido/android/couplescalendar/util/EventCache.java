@@ -1,8 +1,13 @@
 package com.yuyakaido.android.couplescalendar.util;
 
 import android.text.TextUtils;
+
 import com.yuyakaido.android.couplescalendar.model.CouplesCalendarEvent;
+import com.yuyakaido.android.couplescalendar.model.DurationType;
+import com.yuyakaido.android.couplescalendar.model.EventType;
 import com.yuyakaido.android.couplescalendar.model.InternalEvent;
+import com.yuyakaido.android.couplescalendar.model.LinePosition;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
@@ -207,7 +212,7 @@ public class EventCache {
                 InternalEvent transientEvent = new InternalEvent();
                 transientEvent.setStartAt(startAt);
                 transientEvent.setEndAt(endAt);
-                transientEvent.setEventType(CouplesCalendarEvent.EventType.TRANSIENT);
+                transientEvent.setEventType(EventType.TRANSIENT);
                 transientEvent.setEventColor(recurringEvent.getEventColor());
 
                 mEventHolder.addTransientEvent(transientEvent);
@@ -234,28 +239,28 @@ public class EventCache {
 
             // StartAtが早いイベントが下になり、遅いものは上になる
             for (InternalEvent event : dateValue.getMultipleDaysEvents()) {
-                if (event.getLinePosition() == CouplesCalendarEvent.LinePosition.LOWER) {
+                if (event.getLinePosition() == LinePosition.LOWER) {
                     isLower = true;
-                } else if (event.getLinePosition() == CouplesCalendarEvent.LinePosition.UPPER) {
+                } else if (event.getLinePosition() == LinePosition.UPPER) {
                     isUpper = true;
                 }
             }
 
             for (InternalEvent event : dateValue.getMultipleDaysEvents()) {
                 // すでに位置が確定している場合には計算を行わない
-                if (event.getLinePosition() == CouplesCalendarEvent.LinePosition.LOWER
-                        || event.getLinePosition() == CouplesCalendarEvent.LinePosition.UPPER) {
+                if (event.getLinePosition() == LinePosition.LOWER
+                        || event.getLinePosition() == LinePosition.UPPER) {
                     continue;
                 }
 
                 if (!isLower && !isUpper) { // 下も上も空いている場合
-                    event.setLinePosition(CouplesCalendarEvent.LinePosition.LOWER);
+                    event.setLinePosition(LinePosition.LOWER);
                     isLower = true;
                 } else if (isLower && !isUpper) { // 下が埋まっていて、上が空いている場合
-                    event.setLinePosition(CouplesCalendarEvent.LinePosition.UPPER);
+                    event.setLinePosition(LinePosition.UPPER);
                     isUpper = true;
                 } else if (!isLower && isUpper) { // 下が空いていて、上が埋まっている場合
-                    event.setLinePosition(CouplesCalendarEvent.LinePosition.LOWER);
+                    event.setLinePosition(LinePosition.LOWER);
                     isLower = true;
                 } else if (isLower && isUpper) { // 下も上も埋まっている場合
                     // 上下の線が埋まっている時、終了日のイベントは何も描画しない
@@ -274,30 +279,30 @@ public class EventCache {
                     // 上下両方のイベントが終了日の場合
                     if (isLastDayOfFirstEvent && isLastDayOfSecondEvent) {
                         if (!isLowerConflict && !isUpperConflict) {
-                            event.setLinePosition(CouplesCalendarEvent.LinePosition.LOWER);
+                            event.setLinePosition(LinePosition.LOWER);
                             isLowerConflict = true;
                         } else if (isLowerConflict && !isUpperConflict) {
-                            event.setLinePosition(CouplesCalendarEvent.LinePosition.UPPER);
+                            event.setLinePosition(LinePosition.UPPER);
                             isUpperConflict = true;
                         } else if (isLowerConflict && isUpperConflict) {
                             continue;
                         }
                     } else if (isLastDayOfFirstEvent) { // 下のイベントが終了日の場合
-                        if (firstEvent.getLinePosition() == CouplesCalendarEvent.LinePosition.LOWER && !isLowerConflict) {
-                            event.setLinePosition(CouplesCalendarEvent.LinePosition.LOWER);
+                        if (firstEvent.getLinePosition() == LinePosition.LOWER && !isLowerConflict) {
+                            event.setLinePosition(LinePosition.LOWER);
                             isLowerConflict = true;
-                        } else if (firstEvent.getLinePosition() == CouplesCalendarEvent.LinePosition.UPPER && !isUpperConflict) {
-                            event.setLinePosition(CouplesCalendarEvent.LinePosition.UPPER);
+                        } else if (firstEvent.getLinePosition() == LinePosition.UPPER && !isUpperConflict) {
+                            event.setLinePosition(LinePosition.UPPER);
                             isUpperConflict = true;
                         } else {
                             continue;
                         }
                     } else if (isLastDayOfFirstEvent) { // 上のイベントが終了日の場合
-                        if (secondEvent.getLinePosition() == CouplesCalendarEvent.LinePosition.LOWER && !isLowerConflict) {
-                            event.setLinePosition(CouplesCalendarEvent.LinePosition.LOWER);
+                        if (secondEvent.getLinePosition() == LinePosition.LOWER && !isLowerConflict) {
+                            event.setLinePosition(LinePosition.LOWER);
                             isLowerConflict = true;
-                        } else if (secondEvent.getLinePosition() == CouplesCalendarEvent.LinePosition.UPPER && !isUpperConflict) {
-                            event.setLinePosition(CouplesCalendarEvent.LinePosition.UPPER);
+                        } else if (secondEvent.getLinePosition() == LinePosition.UPPER && !isUpperConflict) {
+                            event.setLinePosition(LinePosition.UPPER);
                             isUpperConflict = true;
                         } else {
                             continue;
@@ -362,7 +367,7 @@ public class EventCache {
         public List<InternalEvent> getAllEvents(DateTime fromDateTime, DateTime toDateTime) {
             List<InternalEvent> result = new ArrayList<>();
             for (InternalEvent event : mAllEvents) {
-                if (event.getEventType() != CouplesCalendarEvent.EventType.RECURRING
+                if (event.getEventType() != EventType.RECURRING
                         && (((fromDateTime.getMillis() <= event.getZonedStartAt().getMillis()) && (event.getZonedStartAt().getMillis() <= toDateTime.getMillis()))
                         || ((fromDateTime.getMillis() <= event.getZonedEndAt().getMillis()) && (event.getZonedEndAt().getMillis() <= toDateTime.getMillis()))
                         || ((event.getZonedStartAt().getMillis() <= fromDateTime.getMillis()) && (toDateTime.getMillis() <= event.getZonedEndAt().getMillis())))) {
@@ -474,7 +479,7 @@ public class EventCache {
         }
 
         public void add(InternalEvent event) {
-            if (event.getDurationType() == CouplesCalendarEvent.DurationType.MULTIPLE_DAYS) {
+            if (event.getDurationType() == DurationType.MULTIPLE_DAYS) {
                 mMultipleDaysEvents.add(event);
             } else {
                 mOneDayEvents.add(event);
