@@ -17,9 +17,9 @@ public interface CouplesCalendarEvent {
         NORMAL, RECURRING, TRANSIENT,
     }
 
-    public String getRecurrenceRule();
-    public java.util.Date getStartAt();
-    public java.util.Date getEndAt();
-    public int getEventColor();
+    String getRecurrenceRule();
+    java.util.Date getStartAt();
+    java.util.Date getEndAt();
+    int getEventColor();
 
 }

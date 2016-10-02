@@ -37,14 +37,14 @@ public class CouplesCalendarView extends LinearLayout
      * 月が変わったことを通知するためのコールバックリスナー
      */
     public interface OnMonthChangeListener {
-        public void onMonthChange(Date month);
+        void onMonthChange(Date month);
     }
 
     /**
      * 日付が選択されたことを通知するためのコールバックリスナー
      */
     public interface OnDateClickListener {
-        public void onDateClick(Date date);
+        void onDateClick(Date date);
     }
 
     private static final int MONTH_VIEW_PAGER_MARGIN = 20;
