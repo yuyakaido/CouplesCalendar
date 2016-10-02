@@ -1,6 +1,10 @@
 # CouplesCalendar
 
-![](https://raw.githubusercontent.com/yuyakaido/CouplesCalendar/master/screenshots/3.png)
+Functional calendar library for Android
+
+- Horizontal swipe
+- Show dot for one day event
+- Show line for multiple days event
 
 ## Display of event
 
