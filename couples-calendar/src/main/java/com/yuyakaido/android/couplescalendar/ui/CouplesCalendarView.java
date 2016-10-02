@@ -1,20 +1,18 @@
 package com.yuyakaido.android.couplescalendar.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yuyakaido.android.couplescalendar.R;
@@ -22,8 +20,8 @@ import com.yuyakaido.android.couplescalendar.adapter.DateGridAdapter;
 import com.yuyakaido.android.couplescalendar.model.CouplesCalendarEvent;
 import com.yuyakaido.android.couplescalendar.model.Theme;
 import com.yuyakaido.android.couplescalendar.util.CalendarUtils;
-
 import com.yuyakaido.android.couplescalendar.util.EventCache;
+
 import org.joda.time.DateTime;
 
 import java.util.Date;
@@ -32,9 +30,8 @@ import java.util.List;
 /**
  * Created by yuyakaido on 6/9/15.
  */
-public class CouplesCalendarFragment extends Fragment implements
-        AdapterView.OnItemClickListener,
-        ViewPager.OnPageChangeListener {
+public class CouplesCalendarView extends LinearLayout
+        implements AdapterView.OnItemClickListener, ViewPager.OnPageChangeListener {
 
     /**
      * 月が変わったことを通知するためのコールバックリスナー
@@ -50,7 +47,6 @@ public class CouplesCalendarFragment extends Fragment implements
         public void onDateClick(Date date);
     }
 
-    private static final String ARGS_THEME = "ARGS_THEME";
     private static final int MONTH_VIEW_PAGER_MARGIN = 20;
 
     private OnDateClickListener mOnDateClickListener;
@@ -65,64 +61,38 @@ public class CouplesCalendarFragment extends Fragment implements
 
     private EventCache mEventCache = new EventCache();
 
-    public static CouplesCalendarFragment newInstance() {
-        return CouplesCalendarFragment.newInstance(Theme.getDefaultTheme());
+    public CouplesCalendarView(Context context) {
+        this(context, null);
     }
 
-    public static CouplesCalendarFragment newInstance(Theme theme) {
-        if (theme == null) {
-            theme = Theme.getDefaultTheme();
-        }
-
-        Bundle args = new Bundle();
-        args.putSerializable(ARGS_THEME, theme);
-        CouplesCalendarFragment fragment = new CouplesCalendarFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public CouplesCalendarView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof OnDateClickListener) {
-            mOnDateClickListener = (OnDateClickListener) activity;
-        }
-        if (activity instanceof OnMonthChangeListener) {
-            mOnMonthChangeListener = (OnMonthChangeListener) activity;
-        }
+    public CouplesCalendarView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initialize();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_couples_calendar, container, false);
-    }
+    public void initialize() {
+        View.inflate(getContext(), R.layout.view_couples_calendar, this);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mMonthViewPager = (ViewPager) view.findViewById(R.id.fragment_couples_calendar_view_pager);
-        mDayOfWeekGridView = (GridView) view.findViewById(R.id.fragment_couples_calendar_day_of_week_grid_view);
-    }
+        mMonthViewPager = (ViewPager) findViewById(R.id.view_couples_calendar_view_pager);
+        mDayOfWeekGridView = (GridView) findViewById(R.id.view_couples_calendar_day_of_week_grid_view);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        Bundle args = getArguments();
-        mTheme = (Theme) args.getSerializable(ARGS_THEME);
+        mTheme = Theme.getDefaultTheme();
 
         mToday = CalendarUtils.getZonedMidnight();
 
         // 月表示
         mMonthViewPagerAdapter = new MonthViewPagerAdapter();
         mMonthViewPager.setAdapter(mMonthViewPagerAdapter);
-        mMonthViewPager.setPageMargin(CalendarUtils.dp2px(getActivity(), MONTH_VIEW_PAGER_MARGIN));
+        mMonthViewPager.setPageMargin(CalendarUtils.dp2px(getContext(), MONTH_VIEW_PAGER_MARGIN));
         mMonthViewPager.setOnPageChangeListener(this);
         mMonthViewPager.setCurrentItem(MonthViewPagerAdapter.PAGER_CENTER_COUNT);
 
         // 曜日表示
-        mDayOfWeekGridView.setAdapter(new DayOfWeekGridAdapter());
+        mDayOfWeekGridView.setAdapter(new DayOfWeekGridAdapter(getContext()));
     }
 
     /**
@@ -182,11 +152,6 @@ public class CouplesCalendarFragment extends Fragment implements
                 @Override
                 protected void onPostExecute(Void result) {
                     super.onPostExecute(result);
-                    if (isDetached()) {
-                        return;
-                    }
-
-                    // カレンダーを更新する
                     update();
                 }
             }.execute();
@@ -202,23 +167,28 @@ public class CouplesCalendarFragment extends Fragment implements
      * @param events
      */
     public void setEvents(final List<CouplesCalendarEvent> events) {
+        final int currentItem = mMonthViewPager.getCurrentItem();
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                mEventCache.init(events, mMonthViewPagerAdapter.getDateTime(mMonthViewPager.getCurrentItem()));
+                mEventCache.init(events, mMonthViewPagerAdapter.getDateTime(currentItem));
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
-                if (isDetached()) {
-                    return;
-                }
-
                 update();
             }
         }.execute();
+    }
+
+    public void setOnMonthChangeListener(OnMonthChangeListener listener) {
+        this.mOnMonthChangeListener = listener;
+    }
+
+    public void setOnDateClickListener(OnDateClickListener listener) {
+        this.mOnDateClickListener = listener;
     }
 
     /**
@@ -294,13 +264,13 @@ public class CouplesCalendarFragment extends Fragment implements
         private DateGridAdapter[] mDateGridAdapters = new DateGridAdapter[OFFSET_LIMIT];
 
         public MonthViewPagerAdapter() {
-            mLayoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mLayoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
         public View instantiateItem(ViewGroup container, int position) {
             DateGridAdapter dateGridAdapter = new DateGridAdapter(
-                    getActivity(),
+                    getContext(),
                     mEventCache,
                     mTheme,
                     getDateTime(position),
@@ -309,7 +279,7 @@ public class CouplesCalendarFragment extends Fragment implements
             GridView gridView = (GridView) mLayoutInflater.inflate(
                     R.layout.item_month_view_pager, container, false);
             gridView.setAdapter(dateGridAdapter);
-            gridView.setOnItemClickListener(CouplesCalendarFragment.this);
+            gridView.setOnItemClickListener(CouplesCalendarView.this);
             container.addView(gridView);
             return gridView;
         }
@@ -337,7 +307,10 @@ public class CouplesCalendarFragment extends Fragment implements
          * @param position
          */
         public void update(int position) {
-            mDateGridAdapters[position % OFFSET_LIMIT].notifyDataSetChanged();
+            DateGridAdapter adapter = mDateGridAdapters[position % OFFSET_LIMIT];
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            }
         }
 
         /**
@@ -359,9 +332,9 @@ public class CouplesCalendarFragment extends Fragment implements
 
         private LayoutInflater mLayoutInflater;
 
-        public DayOfWeekGridAdapter() {
-            super(getActivity(), 0, getActivity().getResources().getStringArray(R.array.day_of_weeks));
-            mLayoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public DayOfWeekGridAdapter(Context context) {
+            super(context, 0, context.getResources().getStringArray(R.array.day_of_weeks));
+            mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override

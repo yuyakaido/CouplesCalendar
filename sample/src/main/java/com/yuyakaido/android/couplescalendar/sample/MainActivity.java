@@ -1,16 +1,14 @@
 package com.yuyakaido.android.couplescalendar.sample;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-
 import android.text.format.DateUtils;
 import android.widget.Toast;
+
 import com.yuyakaido.android.couplescalendar.model.CouplesCalendarEvent;
 import com.yuyakaido.android.couplescalendar.model.Theme;
-import com.yuyakaido.android.couplescalendar.ui.CouplesCalendarFragment;
+import com.yuyakaido.android.couplescalendar.ui.CouplesCalendarView;
+
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -18,25 +16,20 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-        CouplesCalendarFragment.OnMonthChangeListener,
-        CouplesCalendarFragment.OnDateClickListener {
+        CouplesCalendarView.OnMonthChangeListener,
+        CouplesCalendarView.OnDateClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final CouplesCalendarFragment fragment = CouplesCalendarFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.main_activity_fragment_container, fragment);
-        transaction.commit();
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                fragment.setEvents(getDummyEvents());
-            }
-        });
+        CouplesCalendarView view = (CouplesCalendarView) findViewById(
+                R.id.activity_main_couples_calendar_view);
+        view.setOnMonthChangeListener(this);
+        view.setOnDateClickListener(this);
+
+        view.setEvents(getDummyEvents());
     }
 
     @Override

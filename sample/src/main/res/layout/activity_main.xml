@@ -5,4 +5,11 @@
     android:id="@+id/main_activity_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.yuyakaido.android.couplescalendar.ui.CouplesCalendarView
+        android:id="@+id/activity_main_couples_calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.yuyakaido.android.couplescalendar.ui.CouplesCalendarView>
+
 </RelativeLayout>
