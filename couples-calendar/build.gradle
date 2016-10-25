@@ -1,4 +1,14 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
 
 android {
     compileSdkVersion 25
@@ -22,4 +32,12 @@ dependencies {
     compile 'com.android.support:support-v4:25.0.0'
     compile 'net.danlew:android.joda:2.9.4.2'
     compile 'com.yuyakaido.android:rrule-processor:1.0.1'
+}
+
+publish {
+    groupId = 'com.yuyakaido.android'
+    artifactId = 'couples-calendar'
+    publishVersion = '0.0.0'
+    uploadName = 'CouplesCalendar'
+    website = 'https://github.com/yuyakaido/CouplesCalendar'
 }
