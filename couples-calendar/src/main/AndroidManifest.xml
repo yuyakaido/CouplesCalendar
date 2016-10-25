@@ -5,7 +5,6 @@
     package="com.yuyakaido.android.couplescalendar">
 
     <application
-            android:allowBackup="true"
             android:label="@string/app_name">
     </application>
 
