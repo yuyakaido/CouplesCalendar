@@ -37,7 +37,7 @@ dependencies {
 publish {
     groupId = 'com.yuyakaido.android'
     artifactId = 'couples-calendar'
-    publishVersion = '0.0.0'
+    publishVersion = '0.5.0'
     uploadName = 'CouplesCalendar'
     website = 'https://github.com/yuyakaido/CouplesCalendar'
 }
