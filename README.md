@@ -73,6 +73,14 @@ StartAt is start date of event, RRule is recurrence frequancy of event.
 
 ![](https://raw.githubusercontent.com/yuyakaido/CouplesCalendar/master/screenshots/2.png)
 
+# Install
+
+- Latest version is [![Download](https://api.bintray.com/packages/yuyakaido/maven/CouplesCalendar/images/download.svg)](https://bintray.com/yuyakaido/maven/CouplesCalendar/_latestVersion)
+
+```
+compile 'com.yuyakaido.android:couples-calendar:${LatestVersion}'
+```
+
 # License
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
