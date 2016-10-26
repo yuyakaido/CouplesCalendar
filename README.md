@@ -1,5 +1,8 @@
 # CouplesCalendar
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Download](https://api.bintray.com/packages/yuyakaido/maven/CouplesCalendar/images/download.svg)](https://bintray.com/yuyakaido/maven/CouplesCalendar/_latestVersion)
+
 Functional calendar library for Android
 
 - Horizontal swipe
